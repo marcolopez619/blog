@@ -33,6 +33,12 @@ public class Blog {
     @NotNull
     private int periodicidadIndex;
 
+    private int puntuacionMinima;
+
+    private int puntuacionMaxima;
+
+    private Double puntuacionPromedio;
+
     private boolean permitirComentarios;
 
     private Date createdDate = new Date();

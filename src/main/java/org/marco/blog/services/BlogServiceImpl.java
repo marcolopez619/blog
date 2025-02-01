@@ -9,6 +9,7 @@ import org.marco.blog.enums.Periodo;
 import org.marco.blog.models.entities.Autor;
 import org.marco.blog.models.entities.Blog;
 import org.marco.blog.models.entities.Comentario;
+import org.marco.blog.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -77,11 +78,13 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Optional<Blog> getBlogById(Long id) {
+        Utils.setStadisticsValues(blogList);
         return blogList.stream().filter(blog -> blog.getId() == id).findFirst();
     }
 
     @Override
     public List<Blog> getBlogList() {
+        Utils.setStadisticsValues(blogList);
         return blogList;
     }
 
