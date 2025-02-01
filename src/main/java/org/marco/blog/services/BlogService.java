@@ -3,6 +3,7 @@ package org.marco.blog.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.marco.blog.models.entities.Autor;
 import org.marco.blog.models.entities.Blog;
 import org.marco.blog.models.entities.Comentario;
 
@@ -17,4 +18,6 @@ public interface BlogService {
     List<Blog> getBlogList();
 
     Optional<Blog> addComment(Comentario comentario);
+
+    Autor saveNewAutor(Autor autor);
 }

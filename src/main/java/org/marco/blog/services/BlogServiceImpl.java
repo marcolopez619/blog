@@ -60,12 +60,10 @@ public class BlogServiceImpl implements BlogService {
         blogfounded.setPeriodicidad(Periodo.values()[blog.getPeriodicidadIndex()]);
 
         blog.getAutor().setId(blogfounded.getAutor().getId());
-        ;
         blog.getAutor().setCreatedDate(blogfounded.getAutor().getCreatedDate());
         blogfounded.setAutor(blog.getAutor());
 
         blogfounded.setPermitirComentarios(blog.isPermitirComentarios());
-
         blog.getListaComentarios().getFirst().setId(blogfounded.getListaComentarios().getFirst().getId());
         blog.getListaComentarios().getFirst().setBlogId(blogfounded.getListaComentarios().getFirst().getBlogId());
         blog.getListaComentarios().getFirst()
@@ -96,11 +94,17 @@ public class BlogServiceImpl implements BlogService {
             return blogOptional;
         }
 
-        var comentarioFormated = comentarioService.save(comentario, comentario.getBlogId());
-
-        blogOptional.get().getListaComentarios().add(comentarioFormated);
+        if (blogOptional.get().isPermitirComentarios()) {
+            var comentarioFormated = comentarioService.save(comentario, comentario.getBlogId());
+            blogOptional.get().getListaComentarios().add(comentarioFormated);
+        }
 
         return blogOptional;
+    }
+
+    @Override
+    public Autor saveNewAutor(Autor autor) {
+        return autorService.save(autor);
     }
 
 }

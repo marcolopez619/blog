@@ -1,5 +1,6 @@
 package org.marco.blog.controllers;
 
+import org.marco.blog.models.entities.Autor;
 import org.marco.blog.models.entities.Blog;
 import org.marco.blog.models.entities.Comentario;
 import org.marco.blog.services.BlogService;
@@ -66,10 +67,28 @@ public class BlogController {
         var blogOptional = blogService.addComment(comentario);
 
         if (blogOptional.isPresent()) {
+
+            if (!blogOptional.get().isPermitirComentarios()) {
+                return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+                        .body("EL BLOG NO PERMITE REGISTRAR COMENTARIOS");
+            }
+
             return ResponseEntity.status(HttpStatus.CREATED).body(blogOptional.get());
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping(value = "/save-autor")
+    public ResponseEntity<?> saveNewAutor(@Valid @RequestBody Autor autor, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return Utils.getErrors(bindingResult);
+        }
+
+        var newAutor = blogService.saveNewAutor(autor);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(newAutor);
     }
 
     @PutMapping
