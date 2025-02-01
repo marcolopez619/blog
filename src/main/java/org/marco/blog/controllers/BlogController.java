@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 @RestController
@@ -24,6 +25,7 @@ public class BlogController {
     @Autowired
     private BlogService blogService;
 
+    @Operation(summary = "Obtiene la lista de blogs con todos sus atributos")
     @GetMapping()
     public ResponseEntity<?> getBlogList() {
         var blogList = blogService.getBlogList();
@@ -35,6 +37,7 @@ public class BlogController {
         return ResponseEntity.ok(blogList);
     }
 
+    @Operation(summary = "Obtiene la informacion de un blog por su ID")
     @GetMapping("/by-id")
     public ResponseEntity<?> getBlogById(@Valid @RequestParam Long id) {
         var optionalBlog = blogService.getBlogById(id);
@@ -46,6 +49,7 @@ public class BlogController {
         return ResponseEntity.notFound().build();
     }
 
+    @Operation(summary = "Permite guardar la informacion de un blog")
     @PostMapping
     public ResponseEntity<?> saveBlog(@Valid @RequestBody Blog blog, BindingResult bindingResult) {
 
@@ -57,6 +61,7 @@ public class BlogController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newBlog);
     }
 
+    @Operation(summary = "Permite anadir un comentario a un Blog")
     @PostMapping(value = "/add-comment")
     public ResponseEntity<?> addComment(@Valid @RequestBody Comentario comentario, BindingResult bindingResult) {
 
@@ -79,6 +84,7 @@ public class BlogController {
         return ResponseEntity.notFound().build();
     }
 
+    @Operation(summary = "Permite guardar la informacion de un autor")
     @PostMapping(value = "/save-autor")
     public ResponseEntity<?> saveNewAutor(@Valid @RequestBody Autor autor, BindingResult bindingResult) {
 
@@ -91,6 +97,7 @@ public class BlogController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newAutor);
     }
 
+    @Operation(summary = "Permite actualizar la informacion de un blog")
     @PutMapping
     public ResponseEntity<?> updateBlog(@Valid @RequestBody Blog blog, BindingResult bindingResult) {
 
