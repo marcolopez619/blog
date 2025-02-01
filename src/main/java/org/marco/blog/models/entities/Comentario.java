@@ -26,6 +26,9 @@ public class Comentario {
     private String email;
 
     @NotBlank
+    private String cuerpo;
+
+    @NotBlank
     private String paisResidencia;
 
     @Min(value = 0)

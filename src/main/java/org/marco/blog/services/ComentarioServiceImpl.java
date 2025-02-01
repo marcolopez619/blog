@@ -14,7 +14,8 @@ public class ComentarioServiceImpl implements ComentarioService {
 
     public static List<Comentario> comentarioList = new ArrayList<>() {
         {
-            add(new Comentario(comentarioId, "nombre comentario", "coment@email.com", "ECUADOR", 5, 1, new Date()));
+            add(new Comentario(comentarioId, "nombre comentario", "coment@email.com", "CUERPO DEL COMENTARIO",
+                    "ECUADOR", 5, 1, new Date()));
         }
     };
 
@@ -38,6 +39,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 
             commentSearched.setNombre(comentario.getNombre());
             commentSearched.setEmail(comentario.getEmail());
+            commentSearched.setCuerpo(comentario.getCuerpo());
             commentSearched.setPaisResidencia(comentario.getPaisResidencia());
             commentSearched.setPuntuacion(comentario.getPuntuacion());
 
