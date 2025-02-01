@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
@@ -30,6 +31,17 @@ public class BlogController {
         }
 
         return ResponseEntity.ok(blogList);
+    }
+
+    @GetMapping("/by-id")
+    public ResponseEntity<?> getBlogById(@Valid @RequestParam Long id) {
+        var optionalBlog = blogService.getBlogById(id);
+
+        if (optionalBlog.isPresent()) {
+            return ResponseEntity.ok(optionalBlog.get());
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping

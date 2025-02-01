@@ -3,6 +3,7 @@ package org.marco.blog.services;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.marco.blog.enums.Periodo;
 import org.marco.blog.models.entities.Autor;
@@ -20,8 +21,6 @@ public class BlogServiceImpl implements BlogService {
     private ComentarioService comentarioService;
 
     public static Long blogId = 1L;
-    // public static Long autorId = 1L;
-    // public static Long comentarioId = 1L;
     public static List<Blog> blogList = new ArrayList<Blog>();
 
     @Override
@@ -39,16 +38,6 @@ public class BlogServiceImpl implements BlogService {
         Periodo periodicidad = Periodo.values()[blog.getPeriodicidadIndex()];
         blog.setPeriodicidad(periodicidad);
         blogList.add(blog);
-        // blog.setId(blogId);
-        // Periodo periodicidad = Periodo.values()[blog.getPeriodicidadIndex()];
-        // blog.setPeriodicidad(periodicidad);
-        // blog.setCreatedDate(new Date());
-        // blog.getListaComentarios().getFirst().setId(comentarioId);
-        // blog.getListaComentarios().getFirst().setBlogId(blogId);
-        // blog.getListaComentarios().getFirst().setCreatedDate(new Date());
-        // blog.getAutor().setId(autorId);
-        // blog.getAutor().setCreatedDate(new Date());
-        // blogList.add(blog);
         return blog;
     }
 
@@ -59,9 +48,8 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Blog getBlog(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getBlog'");
+    public Optional<Blog> getBlogById(Long id) {
+        return blogList.stream().filter(blog -> blog.getId() == id).findFirst();
     }
 
     @Override

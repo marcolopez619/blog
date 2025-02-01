@@ -1,6 +1,7 @@
 package org.marco.blog.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.marco.blog.models.entities.Blog;
 import org.marco.blog.models.entities.Comentario;
@@ -11,7 +12,7 @@ public interface BlogService {
 
     Blog update(Blog blog);
 
-    Blog getBlog(Long id);
+    Optional<Blog> getBlogById(Long id);
 
     List<Blog> getBlogList();
 
