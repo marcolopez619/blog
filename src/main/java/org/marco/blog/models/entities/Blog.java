@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.marco.blog.enums.Periodo;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -27,16 +28,20 @@ public class Blog {
     @NotBlank
     private String contenido;
 
-    @NotNull
     private Periodo periodicidad;
 
     @NotNull
-    private Autor autor;
+    private int periodicidadIndex;
 
     private boolean permitirComentarios = true;
 
-    private List<Comentario> listaComentarios;
+    private Date createdDate = new Date();
 
-    private Date createdDate;
+    @NotNull
+    @Valid
+    private Autor autor;
+
+    @Valid
+    private List<Comentario> listaComentarios;
 
 }

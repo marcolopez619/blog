@@ -19,8 +19,10 @@ public class ComentarioServiceImpl implements ComentarioService {
     };
 
     @Override
-    public Comentario save(Comentario comentario) {
-        comentario.setId(comentarioId);
+    public Comentario save(Comentario comentario, Long idBlog) {
+        comentario.setId(comentarioId++);
+        comentario.setBlogId(idBlog);
+        comentario.setCreatedDate(new Date());
         comentarioList.add(comentario);
         return comentario;
     }

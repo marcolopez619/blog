@@ -30,10 +30,11 @@ public class AutorServiceImpl implements AutorService {
     }
 
     @Override
-    public void save(Autor autor) {
-        autor.setId(++autorId);
+    public Autor save(Autor autor) {
+        autor.setId(autorId++);
         autor.setCreatedDate(new Date());
         autorList.add(autor);
+        return autor;
     }
 
 }

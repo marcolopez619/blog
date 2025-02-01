@@ -10,5 +10,5 @@ public interface AutorService {
 
     Optional<Autor> getById(Long id);
 
-    void save(Autor autor);
+    Autor save(Autor autor);
 }
