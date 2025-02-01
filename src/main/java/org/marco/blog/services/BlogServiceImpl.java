@@ -1,5 +1,6 @@
 package org.marco.blog.services;
 
+import java.lang.foreign.Linker.Option;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,9 +43,39 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Blog update(Blog blog) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    public Optional<Blog> update(Blog blog) {
+
+        var optionalBlog = getBlogById(blog.getId());
+
+        if (!optionalBlog.isPresent()) {
+            return optionalBlog;
+        }
+
+        int index = blogList.indexOf(blogList.stream().filter(x -> x.getId() == blog.getId()).findFirst().get());
+
+        var blogfounded = optionalBlog.get();
+
+        blogfounded.setTitulo(blog.getTitulo());
+        blogfounded.setTema(blog.getTema());
+        blogfounded.setContenido(blog.getContenido());
+        blogfounded.setPeriodicidad(Periodo.values()[blog.getPeriodicidadIndex()]);
+
+        blog.getAutor().setId(blogfounded.getAutor().getId());
+        ;
+        blog.getAutor().setCreatedDate(blogfounded.getAutor().getCreatedDate());
+        blogfounded.setAutor(blog.getAutor());
+
+        blogfounded.setPermitirComentarios(blog.isPermitirComentarios());
+
+        blog.getListaComentarios().getFirst().setId(blogfounded.getListaComentarios().getFirst().getId());
+        blog.getListaComentarios().getFirst().setBlogId(blogfounded.getListaComentarios().getFirst().getBlogId());
+        blog.getListaComentarios().getFirst()
+                .setCreatedDate(blogfounded.getListaComentarios().getFirst().getCreatedDate());
+        blogfounded.setListaComentarios(blog.getListaComentarios());
+
+        blogList.set(index, blogfounded);
+
+        return Optional.of(blogfounded);
     }
 
     @Override

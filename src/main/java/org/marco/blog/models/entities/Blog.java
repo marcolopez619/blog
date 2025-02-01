@@ -33,7 +33,7 @@ public class Blog {
     @NotNull
     private int periodicidadIndex;
 
-    private boolean permitirComentarios = true;
+    private boolean permitirComentarios;
 
     private Date createdDate = new Date();
 
