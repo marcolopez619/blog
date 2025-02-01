@@ -1,6 +1,5 @@
 package org.marco.blog.services;
 
-import java.lang.foreign.Linker.Option;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -89,9 +88,19 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Blog addComment(Comentario comentario, long blogId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addComment'");
+    public Optional<Blog> addComment(Comentario comentario) {
+
+        var blogOptional = getBlogById(comentario.getBlogId());
+
+        if (!blogOptional.isPresent()) {
+            return blogOptional;
+        }
+
+        var comentarioFormated = comentarioService.save(comentario, comentario.getBlogId());
+
+        blogOptional.get().getListaComentarios().add(comentarioFormated);
+
+        return blogOptional;
     }
 
 }

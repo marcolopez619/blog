@@ -16,5 +16,5 @@ public interface BlogService {
 
     List<Blog> getBlogList();
 
-    Blog addComment(Comentario comentario, long blogId);
+    Optional<Blog> addComment(Comentario comentario);
 }

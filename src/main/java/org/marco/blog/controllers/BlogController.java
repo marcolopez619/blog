@@ -1,6 +1,7 @@
 package org.marco.blog.controllers;
 
 import org.marco.blog.models.entities.Blog;
+import org.marco.blog.models.entities.Comentario;
 import org.marco.blog.services.BlogService;
 import org.marco.blog.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,22 @@ public class BlogController {
 
         Blog newBlog = blogService.save(blog);
         return ResponseEntity.status(HttpStatus.CREATED).body(newBlog);
+    }
+
+    @PostMapping(value = "/add-comment")
+    public ResponseEntity<?> addComment(@Valid @RequestBody Comentario comentario, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return Utils.getErrors(bindingResult);
+        }
+
+        var blogOptional = blogService.addComment(comentario);
+
+        if (blogOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(blogOptional.get());
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     @PutMapping
